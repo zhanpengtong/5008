@@ -8,15 +8,17 @@
 #define FNV_OFFSET_32 2166136261
 
 #define DJB2_PRIME 5381
+#define CAPACITY 1000
 
 /**
  * The simple hash, for reach character in key, sum the ascii values
  * return that sum as the hash 
 */
 uint32_t simple_hash(char *key) {
-   
-
-    return 0;
+    uint32_t hashVal = 0;
+    for (int j = 0; key[j]; j++)
+    hashVal += key[j];
+    return hashVal % CAPACITY;
 }
 
 /**
@@ -26,8 +28,13 @@ uint32_t simple_hash(char *key) {
  * return hash
 */
 uint32_t djb2(char *key) {
+    uint32_t hash_val = DJB2_PRIME;
+    char c;
+    while ((c = *key++)) {
+        hash_val = ((hash_val << 5) + hash_val) + c;
+    }
+    return hash_val;
     
-    return 0;
 }
 
 uint32_t fnv_hash(char *key)
